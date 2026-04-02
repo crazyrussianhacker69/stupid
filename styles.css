@@ -1,0 +1,22 @@
+#key {
+    border: black 2px solid;
+    padding: 8px;
+}
+
+#NM {
+    display: inline-block;
+}
+
+#IM {
+    display: inline-block;
+    margin-left: 10%;
+}
+
+#status-bar {
+    border: red 2px solid;
+    margin-top: 80px;
+}
+
+#status-bar-output {
+    margin: 0;
+}
