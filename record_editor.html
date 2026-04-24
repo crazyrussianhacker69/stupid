@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="styles.css">
+        <title>DEX: Record Editor</title>
+    </head>
+    <body>
+
+        <h1>EPCC DATA ENTRY SYSTEM</h1>
+
+        <form>
+            <label for="opid">Operator ID:</label>
+            <input type="text" id="opid" name="opid">
+            <br>
+            <br>
+            <label for="fname">First Name:</label>
+            <input type="text" id="fname" name="fname">
+            <br>
+            <br>
+            <label for="lname">Last Name:</label>
+            <input type="text" id="lname" name="lname">
+            <br>
+            <br>
+            <label for="dob">Date of Birth:</label>
+            <input type="text" id="dob" name="dob">
+            <br>
+            <br>
+            <label for="zip">Zip:</label>
+            <input type="text" id="zip" name="zip">
+        </form>
+
+        <button type="button" id="create-file-btn">Download File</button>
+
+        <br>
+        <br>
+        <br>
+
+        <!-- Key Section -->
+
+        <div id="key">
+            <div id="NM">
+                <h3>Normal Mode</h3>
+                <p>j = Next Field</p>
+                <p>k = Previous Field</p>
+                <p>dd = Delete Field</p>
+                <p>cw = Change Field</p>
+                <p>i = Enters Insert Mode</p>
+            </div>
+
+            <div id="IM">
+                <h3>Insert Mode</h3>
+                <p>ENTER = Next Field</p>
+                <p>ESC = Exit Mode</p>
+                <br>
+                <br>
+                <br>
+                <br>
+                <!-- Will be incorporated in the future -->
+                <!-- <p>F10 = Submit Record</p> -->
+            </div>
+        </div>
+
+        <div id="status-bar">
+            <h1 id="status-bar-output"></h1>
+        </div>
+
+        <!-- Script -->
+        <script type="module" src="js/entry_engine.js"></script>
+    </body>
+</html>

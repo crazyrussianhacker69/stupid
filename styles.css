@@ -1,3 +1,221 @@
+@font-face {
+    font-family: "modenine";
+    src: url('./fonts/modenine-font/Modenine-2OPd.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/********************************************************************************
+* Global Classes 
+********************************************************************************/
+.dexLogo {
+    font-family: monospace;
+    white-space: pre;
+}
+
+
+/********************************************************************************
+* Index 
+********************************************************************************/
+#indexBody {
+    font-family: modenine, monospace;
+}
+
+#loginContainer {
+    border-style: solid;
+    height: 450px;
+    width: 550px;
+    margin: auto;
+    margin-top: 15vh;
+    text-align: center;
+    position: relative;
+}
+
+#smallLogo {
+    /* font-size: 110px; */
+    font-size: 9px;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-top: 6vh;
+}
+
+#motto {
+    font-style: italic;
+    font-size: 12px;
+    margin-top: 0;
+}
+
+#loginLabel {
+    margin-top: 4vh;
+    margin-bottom: 2vh;
+    font-weight: normal;
+}
+
+#operatorInfoContainer {
+    margin: auto;
+    width: 450px;
+    padding: 4px;
+}
+
+#operatorIDLabel {
+    margin-bottom: 1vh;
+    text-align: left;
+}
+
+#opIDInputBox {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    width: 441.5px;
+    height: 45px;
+    margin: auto;
+    font-size: 25px;
+    font-family: modenine;
+    text-transform: uppercase;
+}
+
+#loginBtn {
+    border-style: solid;
+    border-width: 1px;
+    margin-top: 3vh;
+    margin-bottom: 2vh;
+    font-family: modenine;
+    font-size: 20px;
+    width: 100px;
+    height: 50px;
+    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.9);
+    transition: all 0.15s ease;
+    position: relative;
+}
+
+#loginBtn:hover {
+    background-color: black;
+    color: white;
+}
+
+#loginBtn:active {
+    transform: translate(3px, 3px);
+    box-shadow: none;
+}
+
+#systemVersionLabel {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    text-align: right;
+    margin: 0;
+}
+
+/********************************************************************************
+* Main Hub 
+********************************************************************************/
+@keyframes blinkBW {
+    0%, 49% {
+        background-color: white;
+    }
+    50%, 100% {
+        background-color: black;
+    }
+}
+
+#hubBody {
+    padding-top: 20px;
+}
+
+#logo {
+    font-family: modenine, monospace;
+    white-space: pre;
+    font-size: 120px;
+    margin-bottom: 0;
+    font-weight: normal;
+    /* font-size: 24px; */
+}
+
+#mainContainer {
+    width: 75%;
+    margin: auto;
+    text-align: center;
+    font-family: modenine, monospace;
+}
+
+#welcomeMessage {
+    /* margin-top: 5vh; */
+    font-size: 25px;
+    margin-top: 20vh;
+    margin-bottom: 8vh;
+}
+
+#buttonsContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.buttonStyle:hover {
+    background-color: black;
+    color: white;
+}
+
+.buttonStyle:active {
+    transform: translate(5px, 5px);
+    box-shadow: none;
+}
+
+.buttonStyle:hover::after {
+    content: "";
+    display: inline-block;
+    width: 13px;
+    height: 1.2em;
+    margin-left: 6px;
+    background-color: white;
+    vertical-align: bottom;
+    animation: blinkBW 0.8s steps(1, end) infinite;
+}
+
+.buttonStyle {
+    font-size: 30px;
+    font-family: "modenine", monospace;
+    border-style: solid;
+    border-width: 1px;
+    margin: auto;
+    width: 400px;
+    height: 300px;
+    margin-bottom: 45px;
+    box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.9);
+    transition: all 0.15s ease;
+    position: relative;
+}
+
+#activeUserContainer {
+    position: absolute;
+    top: 1vh;
+    right: .5vw;
+    border-style: solid;
+    border-width: 1px;
+    width: 150px;
+    height: 50px;
+    text-align: center;
+}
+
+#operatorID {
+    margin-top: 1vh;
+    display: block;
+    font-family: modenine, monospace;
+}
+
+#signOutBtn {
+    display: block;
+    font-family: modenine, monospace;
+    margin: auto;
+}
+
+/********************************************************************************
+* Form Builder 
+********************************************************************************/
+
+
+/********************************************************************************
+* Record Editor 
+********************************************************************************/
 #key {
     border: black 2px solid;
     padding: 8px;
@@ -19,4 +237,10 @@
 
 #status-bar-output {
     margin: 0;
+}
+
+#create-file-btn {
+    font-size: 20px;
+    margin-top: 10px;
+    margin-left: 350px;
 }

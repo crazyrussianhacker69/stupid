@@ -1,76 +1,38 @@
-<!-------------------------------------------------------------------------------------------
- __ __  _____  __ __    ___  _____  _____  __ __  _____  ____  _____  ___  _____  _____ 
-/  |  \/  _  \/  |  \  /___\/  _  \|  _  \/  |  \/  ___>/    \/  _  \/___\/   __\/  ___>
-\_    ||  |  |\_    |  |   ||  |  ||  |  ||  |  ||___  |\-  -/|  _  <|   ||   __||___  |
-  \___/\_____/  \___/  \___/\__|__/|_____/\_____/<_____/ |__| \__|\_/\___/\_____/<_____/
-                                                                                        
-------------------------------------------------------------------------------------------->
-
 <!DOCTYPE html>
 <html>
     <head>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" href="styles.css">
-	<title>Operator Mode</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="styles.css">
+        <title>DEX: Login</title>
     </head>
-    <body>
-	<h1>EPCC DATA ENTRY SYSTEM</h1>
 
-	<form>
-	    <label for="opid">Operator ID:</label>
-	    <input type="text" id="opid" name="opid">
-	    <br>
-	    <br>
-	    <label for="fname">First Name:</label>
-	    <input type="text" id="fname" name="fname">
-	    <br>
-	    <br>
-	    <label for="lname">Last Name:</label>
-	    <input type="text" id="lname" name="lname">
-	    <br>
-	    <br>
-	    <label for="dob">Date of Birth:</label>
-	    <input type="text" id="dob" name="dob">
-	    <br>
-	    <br>
-	    <label for="zip">Zip:</label>
-	    <input type="text" id="zip" name="zip">
-	</form>
+    <body id="indexBody">
+        <div id="loginContainer">
+            <!-- <h1 id="smallLogo">DEX</h1> -->
+            <pre id="smallLogo">
+__/\\\\\\\\\\\\_____/\\\\\\\\\\\\\\\__/\\\_______/\\\_        
+ _\/\\\////////\\\__\/\\\///////////__\///\\\___/\\\/__       
+  _\/\\\______\//\\\_\/\\\_______________\///\\\\\\/____      
+   _\/\\\_______\/\\\_\/\\\\\\\\\\\_________\//\\\\______     
+    _\/\\\_______\/\\\_\/\\\///////___________\/\\\\______    
+     _\/\\\_______\/\\\_\/\\\__________________/\\\\\\_____   
+      _\/\\\_______/\\\__\/\\\________________/\\\////\\\___  
+       _\/\\\\\\\\\\\\/___\/\\\\\\\\\\\\\\\__/\\\/___\///\\\_ 
+        _\////////////_____\///////////////__\///_______\///__
+            </pre>
+            <p id="motto">--Data Entry Xpress--</p>
+            <h2 id="loginLabel">Login</h2>
 
-	<br>
-	<br>
-	<br>
+            <div id="operatorInfoContainer">
+                <p id="operatorIDLabel">Operator ID</p>
+                <input type="text" name="opID" id="opIDInputBox" placeholder="Enter Initials">
+                <button id="loginBtn">Login</button>
+            </div>
 
-	<!-- Key Section -->
+            <h6 id="systemVersionLabel">v0.0.1</h6>
+        </div>
 
-	<div id="key">
-	    <div id="NM">
-		<h3>Normal Mode</h3>
-		<p>j = Next Field</p>
-		<p>k = Previous Field</p>
-		<p>dd = Delete Field</p>
-		<p>cw = Change Field</p>
-		<p>i = Enters Insert Mode</p>
-	    </div>
-
-	    <div id="IM">
-		<h3>Insert Mode</h3>
-		<p>ENTER = Next Field</p>
-		<p>ESC = Exit Mode</p>
-		<br>
-		<br>
-		<br>
-		<br>
-		<!-- Will be incorporated in the future -->
-		<!-- <p>F10 = Submit Record</p> -->
-	    </div>
-	</div>
-
-	<div id="status-bar">
-	    <h1 id="status-bar-output"></h1>
-	</div>
-
-	<!-- Script -->
-	<script type="module" src="entry_engine.js"></script>
+        <!-- Script -->
+        <script type="module" src="js/index.js"></script>
     </body>
 </html>
