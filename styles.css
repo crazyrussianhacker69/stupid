@@ -207,12 +207,12 @@
 ********************************************************************************/
 #formBuilderBody {
     font-family: modenine;
-    font-weight: normal;
 }
 
 #centerMsg {
     text-align: center;
     margin-top: 45vh;
+    font-weight: normal;
 }
 
 
