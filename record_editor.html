@@ -2,39 +2,16 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <link rel="icon" type="image/x-icon" href="imgs/keyboard.ico">
         <link rel="stylesheet" href="styles.css">
         <title>DEX: Record Editor</title>
     </head>
     <body>
 
-        <h1>EPCC DATA ENTRY SYSTEM</h1>
+        <h1>Record Editor</h1>
 
-        <form>
-            <label for="opid">Operator ID:</label>
-            <input type="text" id="opid" name="opid">
-            <br>
-            <br>
-            <label for="fname">First Name:</label>
-            <input type="text" id="fname" name="fname">
-            <br>
-            <br>
-            <label for="lname">Last Name:</label>
-            <input type="text" id="lname" name="lname">
-            <br>
-            <br>
-            <label for="dob">Date of Birth:</label>
-            <input type="text" id="dob" name="dob">
-            <br>
-            <br>
-            <label for="zip">Zip:</label>
-            <input type="text" id="zip" name="zip">
-        </form>
-
-        <button type="button" id="create-file-btn">Download File</button>
-
-        <br>
-        <br>
-        <br>
+        <form id="recordForm"></form>
+        <button type="button" id="downloadFileBtn">Download File</button>
 
         <!-- Key Section -->
 
@@ -66,6 +43,6 @@
         </div>
 
         <!-- Script -->
-        <script type="module" src="js/entry_engine.js"></script>
+        <script type="module" src="js/record_editor.js"></script>
     </body>
 </html>

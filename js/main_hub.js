@@ -11,6 +11,7 @@ window.onload = () => {
     signOutBtn.addEventListener('click', () => {
         if (confirm('Are you sure you want to sign out?')) {
             sessionStorage.removeItem('operatorID');
+            localStorage.removeItem('formSchema');
             window.location.href = 'index.html';
         }
     });
