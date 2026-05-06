@@ -1,2 +1,1 @@
-Behold, the birth of the world's best record management system.
-This repository focuses more on the mechanics of the system, hence, the ugly UI.
+Behold, the birth of the world’s best record management Express system. Build forms, store records, and print files in seconds. No unecessary bloat guaranteed;)
