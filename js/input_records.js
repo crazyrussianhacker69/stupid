@@ -9,7 +9,7 @@ window.onload = function(){
         // Load schema from localStorage
         const schema = JSON.parse(localStorage.getItem('formSchema'));
         const recordForm = document.getElementById('recordForm');
-        
+
         // Page Title = Form Title
         document.getElementById('formTitle').textContent = schema.formName;
 
@@ -84,6 +84,10 @@ window.onload = function(){
                     focusedField.value = "";
                     mode = "i";
                 }
+                else if (key === "F1") {
+                    fnEngine.displayFormsPanel(null, schema);
+                    mode = "Window";
+                }
                 else if (key === "F10") {           // Downloads file
                     fnEngine.createListFromValues(fieldList);
                 }
@@ -103,10 +107,24 @@ window.onload = function(){
                     mode = "n";
                     fnEngine.setStatusBar(mode);
                     fnEngine.displayFunctionalities(mode);
-                } else if (key === "Enter") {
+                }
+                else if (key === "Enter") {
                     if (focusedFieldIndex < fieldList.length - 1) {
                         fieldList[focusedFieldIndex + 1].focus();
                     }
+                }
+            }
+
+            if (mode === "Window") {
+                keyPress.preventDefault();
+                fnEngine.displayFunctionalities(mode);
+                fnEngine.setStatusBar(mode);
+                
+                if (key === "Escape") {
+                    fnEngine.displayFormsPanel(key);
+                    mode = "n";
+                    fnEngine.setStatusBar(mode);
+                    fnEngine.displayFunctionalities(mode);
                 }
             }
         });

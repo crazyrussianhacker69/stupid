@@ -18,8 +18,8 @@ export function setStatusBar(mode) {
     else if (mode === "i") {
 	statusOutput.textContent = ' --INSERT-- ';
     }
-    else {
-	statusOutput.textContent = ' ERROR ';
+    else if (mode === "Window") {
+	statusOutput.textContent = ' --WINDOW-- ';
     }
 }
 
@@ -36,17 +36,14 @@ export function focusFirstField(fieldList) {
 /**
  * Moves focus to the next field in the form when a specific key is
  * pressed.
- * @param {string} keyPress - The key input from the user.
+ * @param {string} key - The key input from the user.
  * @param {number} indexOfElement - The current index of the focused field.
  * @param {HTMLElement[]} focusableElements - An array of focusable form elements.
  */
-export function nextField(keyPress, indexOfElement, focusableElements) {
-    const key = keyPress;
-    const currentIndex = indexOfElement;
-    const fieldList = focusableElements;
+export function nextField(key, indexOfElement, focusableElements) {
     if (key === "j") {
-	if (currentIndex < fieldList.length - 1) {
-	    fieldList[currentIndex + 1].focus();
+	if (indexOfElement < focusableElements.length - 1) {
+	    focusableElements[indexOfElement + 1].focus();
 	}
     }
 }
@@ -58,14 +55,11 @@ export function nextField(keyPress, indexOfElement, focusableElements) {
  * @param {number} indexOfElement - The current index of the focused field.
  * @param {HTMLElement[]} focusableElements - An array of focusable form elements.
  */
-export function previousField(keyPress, indexOfElement, focusableElements) {
-    const key = keyPress;
-    const currentIndex = indexOfElement;
-    const fieldList = focusableElements;
+export function previousField(key, indexOfElement, focusableElements) {
     if (key === "k") {
-	if (currentIndex > 0) {
-	    fieldList[currentIndex - 1].focus();
-	}
+        if (indexOfElement > 0) {
+            focusableElements[indexOfElement - 1].focus();
+        }
     }
 }
 
@@ -107,19 +101,58 @@ export function displayFunctionalities(mode) {
             <p class="functionality">&lt;k&gt;&thinsp;Previous Field&thinsp;</p>
             <p class="functionality">&lt;d&gt;&thinsp;Delete&thinsp;</p>
             <p class="functionality">&lt;c&gt;&thinsp;Change&thinsp;</p>
+            <p class="functionality">&lt;F1&gt;&thinsp;Forms&thinsp;</p>
             <p class="functionality">&lt;F10&gt;&thinsp;Download&thinsp;</p>
             <p class="functionality">&lt;F11&gt;&thinsp;Save and Close&thinsp;</p>
         `;
     }
-    if (mode === "i") {
+    else if (mode === "i") {
         container.replaceChildren();
         container.innerHTML = `
             <p class="functionality">&lt;ESC&gt;&thinsp;Exit Mode&thinsp;</p>
             <p class="functionality">&lt;ENTER&gt;&thinsp;Next Field&thinsp;</p>
         `;
     }
+    else if (mode === "Window") {
+        container.replaceChildren();
+        container.innerHTML = `
+            <p class="functionality">&lt;ESC&gt;&thinsp;Close&thinsp;</p>
+            <p class="functionality">&lt;j&gt;&thinsp;Next&thinsp;</p>
+            <p class="functionality">&lt;k&gt;&thinsp;Previous&thinsp;</p>
+            <p class="functionality">&lt;ENTER&gt;&thinsp;Confirm&thinsp;</p>
+        `;
+    }
 }
 
 export function saveAndClose() {
     document.location.href = "main_hub.html";
+}
+
+export function displayFormsPanel(key, schema = null) {
+    const formPanel = document.getElementById('centerPanel');
+
+    // ESC = close panel immediately and stop
+    if (key === "Escape") {
+        formPanel.replaceChildren();
+        return;
+    }
+
+    // Panel UI
+    formPanel.innerHTML = `
+        <div id="formPanel">
+            <div class="panelHeader">
+                <span>Saved Forms</span>
+            </div>
+            <div id="formsList"></div>
+        </div>
+    `;
+
+    const forms = document.getElementById('formsList');
+
+    // Only render schema if it exists
+    if (schema && schema.formName) {
+        forms.textContent = schema.formName;
+    } else {
+        forms.textContent = "No form loaded";
+    }
 }
