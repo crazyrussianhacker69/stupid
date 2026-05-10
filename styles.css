@@ -22,6 +22,23 @@
     font-family: modenine, monospace;
 }
 
+.formName {
+    display: block;
+    width: 100%;
+    text-align: left;
+    font-family: modenine, monospace;
+    font-style: italic;
+    background-color: #CCCCCC;
+    border-style: none;
+    font-size: 20px;
+}
+
+.highlight:focus {
+    outline: none;
+    background-color: black;
+    color: white;
+}
+
 
 /********************************************************************************
 * index.html
@@ -263,7 +280,7 @@
     width: 35vw;
     border-style: double;
     position: relative;
-    padding: 4px;
+    padding: 10px;
     background-color: #CCCCCC;
 }
 
@@ -313,6 +330,9 @@
     font-size: 20px;
 }
 
+#formsList {
+    font-style: italic;
+}
 /********************************************************************************
 * verify_records.html
 ********************************************************************************/

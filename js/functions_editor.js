@@ -12,13 +12,13 @@
  */
 export function setStatusBar(mode) {
     const statusOutput = document.getElementById('statusBarOutput');
-    if (mode === "n") {
+    if (mode === "normal") {
 	statusOutput.textContent = ' --NORMAL-- ';
     }
-    else if (mode === "i") {
+    else if (mode === "insert") {
 	statusOutput.textContent = ' --INSERT-- ';
     }
-    else if (mode === "Window") {
+    else if (mode === "window") {
 	statusOutput.textContent = ' --WINDOW-- ';
     }
 }
@@ -33,32 +33,22 @@ export function focusFirstField(fieldList) {
     }
 }
 
-/**
- * Moves focus to the next field in the form when a specific key is
- * pressed.
- * @param {string} key - The key input from the user.
- * @param {number} indexOfElement - The current index of the focused field.
- * @param {HTMLElement[]} focusableElements - An array of focusable form elements.
- */
-export function nextField(key, indexOfElement, focusableElements) {
+export function nextField(key, array) {
     if (key === "j") {
-	if (indexOfElement < focusableElements.length - 1) {
-	    focusableElements[indexOfElement + 1].focus();
-	}
+        const focusedElement = document.activeElement;
+        const currentIndex = array.indexOf(focusedElement);
+        if (currentIndex < array.length - 1) {
+            array[currentIndex + 1].focus();
+        }
     }
 }
 
-/**
- * Moves focus to the previous field in the form when a specific key is
- * pressed.
- * @param {string} keyPress - The key input from the user.
- * @param {number} indexOfElement - The current index of the focused field.
- * @param {HTMLElement[]} focusableElements - An array of focusable form elements.
- */
-export function previousField(key, indexOfElement, focusableElements) {
+export function previousField(key, array) {
     if (key === "k") {
-        if (indexOfElement > 0) {
-            focusableElements[indexOfElement - 1].focus();
+        const focusedElement = document.activeElement;
+        const currentIndex = array.indexOf(focusedElement);
+        if (currentIndex > 0) {
+            array[currentIndex - 1].focus();
         }
     }
 }
@@ -93,7 +83,7 @@ export function createListFromValues(list) {
 
 export function displayFunctionalities(mode) {
     const container = document.getElementById('modeOptions');
-    if (mode === "n") {
+    if (mode === "normal") {
         container.replaceChildren();
         container.innerHTML = `
             <p class="functionality">&lt;i&gt;&thinsp;Insert&thinsp;</p>
@@ -106,14 +96,14 @@ export function displayFunctionalities(mode) {
             <p class="functionality">&lt;F11&gt;&thinsp;Save and Close&thinsp;</p>
         `;
     }
-    else if (mode === "i") {
+    else if (mode === "insert") {
         container.replaceChildren();
         container.innerHTML = `
             <p class="functionality">&lt;ESC&gt;&thinsp;Exit Mode&thinsp;</p>
             <p class="functionality">&lt;ENTER&gt;&thinsp;Next Field&thinsp;</p>
         `;
     }
-    else if (mode === "Window") {
+    else if (mode === "window") {
         container.replaceChildren();
         container.innerHTML = `
             <p class="functionality">&lt;ESC&gt;&thinsp;Close&thinsp;</p>
@@ -128,31 +118,30 @@ export function saveAndClose() {
     document.location.href = "main_hub.html";
 }
 
-export function displayFormsPanel(key, schema = null) {
-    const formPanel = document.getElementById('centerPanel');
-
-    // ESC = close panel immediately and stop
-    if (key === "Escape") {
-        formPanel.replaceChildren();
-        return;
-    }
-
-    // Panel UI
-    formPanel.innerHTML = `
+export function displayFormsPanel(loadedForms) {
+    // Generates panel box
+    const centerPanel = document.getElementById('centerPanel');
+    centerPanel.innerHTML = `
         <div id="formPanel">
             <div class="panelHeader">
-                <span>Saved Forms</span>
+                <span>Load Form</span>
             </div>
             <div id="formsList"></div>
         </div>
     `;
 
-    const forms = document.getElementById('formsList');
-
-    // Only render schema if it exists
-    if (schema && schema.formName) {
-        forms.textContent = schema.formName;
-    } else {
-        forms.textContent = "No form loaded";
+    // Popullates panel with available forms
+    const output = document.getElementById('formsList');
+    for (let i = 0; i < loadedForms.length; i++) {
+        const row = document.createElement('button');
+        row.className = 'highlight formName';
+        row.textContent = loadedForms[i].formName;
+        output.appendChild(row);
     }
+
+    // Focus on first available form
+    const formList = Array.from(document.querySelectorAll('.formName'));
+    formList[0].focus();
+
+    return formList;
 }

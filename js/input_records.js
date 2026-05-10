@@ -6,127 +6,172 @@ window.onload = function(){
         window.location.href = "main_hub.html";
     }
     else {
-        // Load schema from localStorage
-        const schema = JSON.parse(localStorage.getItem('formSchema'));
-        const recordForm = document.getElementById('recordForm');
+        // State
+        let mode = 'window';
 
-        // Page Title = Form Title
-        document.getElementById('formTitle').textContent = schema.formName;
+        // Load forms from local storage
+        const savedForms = JSON.parse(localStorage.getItem('formSchemas'));
 
-        // This array will hold all input/select elements for navigation
-        let fieldList = [];
-
-        // Generate fields dynamically
-        if (schema && schema.fields.length > 0) {
-            schema.fields.forEach(field => {
-                // Label
-                const labelEl = document.createElement('label');
-                labelEl.textContent = field.label + ":";
-                labelEl.setAttribute('for', field.name);
-
-                // Input element
-                let inputEl;
-                if (field.type === 'select') {
-                    inputEl = document.createElement('select');
-                    inputEl.id = field.name;
-
-                    field.options.forEach(opt => {
-                        const optionEl = document.createElement('option');
-                        optionEl.value = opt;
-                        optionEl.textContent = opt;
-                        inputEl.appendChild(optionEl);
-                    });
-                } else {
-                    inputEl = document.createElement('input');
-                    inputEl.type = field.type === 'number' ? 'number' : 'text';
-                    inputEl.id = field.name;
-                }
-
-                // Append to form
-                recordForm.appendChild(labelEl);
-                recordForm.appendChild(inputEl);
-                recordForm.appendChild(document.createElement('br'));
-                recordForm.appendChild(document.createElement('br'));
-
-                // Add to field list for navigation
-                fieldList.push(inputEl);
-            });
-        }
-
-        // Focus on the first field
-        fnEngine.focusFirstField(fieldList);
-
-        // Initial mode: Normal
-        let mode = "n";
+        // Initialize UI
+        const formList = fnEngine.displayFormsPanel(savedForms);
         fnEngine.setStatusBar(mode);
         fnEngine.displayFunctionalities(mode);
 
-        // Keydown listener
-        document.addEventListener('keydown', function(keyPress) {
+        // Global event listener that will reroute behavior
+        document.addEventListener('keydown', handleKeyDown);
 
-            const focusedField = document.activeElement;
-            const focusedFieldIndex = fieldList.indexOf(focusedField);
-            const key = keyPress.key;
-
-            if (mode === "n") {
-                // Block typing
-                keyPress.preventDefault();
-
-                // Navigation
-                fnEngine.nextField(key, focusedFieldIndex, fieldList);
-                fnEngine.previousField(key, focusedFieldIndex, fieldList);
-
-                // Motions
-                if (key === "d") {                  // Delete field value: d
-                    focusedField.value = "";
-                }
-                else if (key === "c") {             // Change field (c) -> enters insert mode
-                    focusedField.value = "";
-                    mode = "i";
-                }
-                else if (key === "F1") {
-                    fnEngine.displayFormsPanel(null, schema);
-                    mode = "Window";
-                }
-                else if (key === "F10") {           // Downloads file
-                    fnEngine.createListFromValues(fieldList);
-                }
-                else if (key === "F11") {           // Save and Close
-                    fnEngine.saveAndClose();
-                }
-                else if (key === "i") {             // Enter insert mode
-                    mode = "i";
-                }
+        function handleKeyDown(event) {
+            if (mode === "window") {
+                handleWindow(event);
+                return;
+            } else if (mode === "normal") {
+                handleNormal(event);
+                return;
+            } else if (mode === "insert") {
+                handleInsert(event);
+                return;
             }
+        }
 
-            if (mode === "i") {
-                fnEngine.setStatusBar(mode);
-                fnEngine.displayFunctionalities(mode);
-
-                if (key === "Escape") {
-                    mode = "n";
-                    fnEngine.setStatusBar(mode);
-                    fnEngine.displayFunctionalities(mode);
-                }
-                else if (key === "Enter") {
-                    if (focusedFieldIndex < fieldList.length - 1) {
-                        fieldList[focusedFieldIndex + 1].focus();
-                    }
-                }
+        function handleWindow(event) {
+            let key = event.key;
+            if (key === 'j') {
+                fnEngine.nextField(key, formList);
             }
-
-            if (mode === "Window") {
-                keyPress.preventDefault();
-                fnEngine.displayFunctionalities(mode);
-                fnEngine.setStatusBar(mode);
-                
-                if (key === "Escape") {
-                    fnEngine.displayFormsPanel(key);
-                    mode = "n";
-                    fnEngine.setStatusBar(mode);
-                    fnEngine.displayFunctionalities(mode);
-                }
+            else if (key === 'k') {
+                fnEngine.previousField(key, formList);
             }
-        });
+            else if (key === 'Enter') {
+                // let indexOfSelectedForm = formList.indexOf(
+                // console.log(formList);
+            }
+        }
+
+        // function loadForm(
+
+        // fnEngine.displayFormsPanel(null, schema); 
+
+        //      // Load schema from localStorage
+        //      const schema = JSON.parse(localStorage.getItem('formSchema'));
+        //      const recordForm = document.getElementById('recordForm');
+
+        //      // Page Title = Form Title
+        //      document.getElementById('formTitle').textContent = schema.formName;
+
+        //      // This array will hold all input/select elements for navigation
+        //      let fieldList = [];
+
+        //      // Generate fields dynamically
+        //      if (schema && schema.fields.length > 0) {
+        //          schema.fields.forEach(field => {
+        //              // Label
+        //              const labelEl = document.createElement('label');
+        //              labelEl.textContent = field.label + ":";
+        //              labelEl.setAttribute('for', field.name);
+
+        //              // Input element
+        //              let inputEl;
+        //              if (field.type === 'select') {
+        //                  inputEl = document.createElement('select');
+        //                  inputEl.id = field.name;
+
+        //                  field.options.forEach(opt => {
+        //                      const optionEl = document.createElement('option');
+        //                      optionEl.value = opt;
+        //                      optionEl.textContent = opt;
+        //                      inputEl.appendChild(optionEl);
+        //                  });
+        //              } else {
+        //                  inputEl = document.createElement('input');
+        //                  inputEl.type = field.type === 'number' ? 'number' : 'text';
+        //                  inputEl.id = field.name;
+        //              }
+
+        //              // Append to form
+        //              recordForm.appendChild(labelEl);
+        //              recordForm.appendChild(inputEl);
+        //              recordForm.appendChild(document.createElement('br'));
+        //              recordForm.appendChild(document.createElement('br'));
+
+        //              // Add to field list for navigation
+        //              fieldList.push(inputEl);
+        //          });
+        //      }
+
+        //      // Focus on the first field
+        //      fnEngine.focusFirstField(fieldList);
+
+        //      // Initial mode: Normal
+        //      let mode = "n";
+        //      fnEngine.setStatusBar(mode);
+        //      fnEngine.displayFunctionalities(mode);
+
+        //      // Keydown listener
+        //      document.addEventListener('keydown', function(keyPress) {
+
+        //          const focusedField = document.activeElement;
+        //          const focusedFieldIndex = fieldList.indexOf(focusedField);
+        //          const key = keyPress.key;
+
+        //          if (mode === "n") {
+        //              // Block typing
+        //              keyPress.preventDefault();
+
+        //              // Navigation
+        //              fnEngine.nextField(key, focusedFieldIndex, fieldList);
+        //              fnEngine.previousField(key, focusedFieldIndex, fieldList);
+
+        //              // Motions
+        //              if (key === "d") {                  // Delete field value: d
+        //                  focusedField.value = "";
+        //              }
+        //              else if (key === "c") {             // Change field (c) -> enters insert mode
+        //                  focusedField.value = "";
+        //                  mode = "i";
+        //              }
+        //              else if (key === "F1") {
+        //                  fnEngine.displayFormsPanel(null, schema);
+        //                  mode = "Window";
+        //              }
+        //              else if (key === "F10") {           // Downloads file
+        //                  fnEngine.createListFromValues(fieldList);
+        //              }
+        //              else if (key === "F11") {           // Save and Close
+        //                  fnEngine.saveAndClose();
+        //              }
+        //              else if (key === "i") {             // Enter insert mode
+        //                  mode = "i";
+        //              }
+        //          }
+
+        //          if (mode === "i") {
+        //              fnEngine.setStatusBar(mode);
+        //              fnEngine.displayFunctionalities(mode);
+
+        //              if (key === "Escape") {
+        //                  mode = "n";
+        //                  fnEngine.setStatusBar(mode);
+        //                  fnEngine.displayFunctionalities(mode);
+        //              }
+        //              else if (key === "Enter") {
+        //                  if (focusedFieldIndex < fieldList.length - 1) {
+        //                      fieldList[focusedFieldIndex + 1].focus();
+        //                  }
+        //              }
+        //          }
+
+        //          if (mode === "Window") {
+        //              keyPress.preventDefault();
+        //              fnEngine.displayFunctionalities(mode);
+        //              fnEngine.setStatusBar(mode);
+        //              
+        //              if (key === "Escape") {
+        //                  fnEngine.displayFormsPanel(key);
+        //                  mode = "n";
+        //                  fnEngine.setStatusBar(mode);
+        //                  fnEngine.displayFunctionalities(mode);
+        //              }
+        //          }
+        //      });
     }
 };

@@ -7,6 +7,7 @@ let schema = {
     fields: []
 };
 
+// Add Field Button
 document.getElementById('addField').addEventListener('click', () => {
     const container = document.getElementById('fieldsContainer');
 
@@ -28,6 +29,7 @@ document.getElementById('addField').addEventListener('click', () => {
     container.appendChild(row);
 });
 
+// Save Form Button
 document.getElementById('saveForm').addEventListener('click', () => {
     const formName = document.getElementById('formName').value;
     const rows = document.querySelectorAll('.field-row');
@@ -66,9 +68,12 @@ document.getElementById('saveForm').addEventListener('click', () => {
         schema.fields.push(field);
     });
 
-    localStorage.setItem('formSchema', JSON.stringify(schema));
+    let existingSchemas = JSON.parse(localStorage.getItem('formSchemas')) || [];
+    existingSchemas.push(schema);
+    localStorage.setItem('formSchemas', JSON.stringify(existingSchemas));
 
-    alert("Form saved!");
-    console.log(schema);
-    document.location.href = "main_hub.html";
+    const stayOnPage = window.confirm("Form Saved!\n Do you want to save another form?");
+    if (!stayOnPage) {
+        document.location.href = "main_hub.html";
+    }
 });
