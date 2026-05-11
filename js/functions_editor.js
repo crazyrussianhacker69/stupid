@@ -33,23 +33,15 @@ export function focusFirstField(fieldList) {
     }
 }
 
-export function nextField(key, array) {
-    if (key === "j") {
-        const focusedElement = document.activeElement;
-        const currentIndex = array.indexOf(focusedElement);
-        if (currentIndex < array.length - 1) {
-            array[currentIndex + 1].focus();
-        }
+export function nextField(index, array) {
+    if (index < array.length - 1) {
+        array[index + 1].focus();
     }
 }
 
-export function previousField(key, array) {
-    if (key === "k") {
-        const focusedElement = document.activeElement;
-        const currentIndex = array.indexOf(focusedElement);
-        if (currentIndex > 0) {
-            array[currentIndex - 1].focus();
-        }
+export function previousField(index, array) {
+    if (index > 0) {
+        array[index - 1].focus();
     }
 }
 
@@ -91,8 +83,7 @@ export function displayFunctionalities(mode) {
             <p class="functionality">&lt;k&gt;&thinsp;Previous Field&thinsp;</p>
             <p class="functionality">&lt;d&gt;&thinsp;Delete&thinsp;</p>
             <p class="functionality">&lt;c&gt;&thinsp;Change&thinsp;</p>
-            <p class="functionality">&lt;F1&gt;&thinsp;Forms&thinsp;</p>
-            <p class="functionality">&lt;F10&gt;&thinsp;Download&thinsp;</p>
+            <p class="functionality">&lt;F10&gt;&thinsp;Forms&thinsp;</p>
             <p class="functionality">&lt;F11&gt;&thinsp;Save and Close&thinsp;</p>
         `;
     }
@@ -115,6 +106,30 @@ export function displayFunctionalities(mode) {
 }
 
 export function saveAndClose() {
+    const form = document.getElementById('recordForm');
+    if (!form) return;
+
+    // Collect data from all inputs/selects
+    const data = {};
+    const elements = form.querySelectorAll('input, select, textarea');
+    elements.forEach(el => {
+        data[el.name || el.id] = el.value;
+    });
+
+    // Retrieve current form schemas from localStorage
+    const formName = document.getElementById('formTitle').textContent;
+    const savedRecords = JSON.parse(localStorage.getItem('formRecords')) || {};
+
+    // Store data under the form name
+    if (!savedRecords[formName]) savedRecords[formName] = [];
+    savedRecords[formName].push(data);
+
+    // Save back to localStorage
+    localStorage.setItem('formRecords', JSON.stringify(savedRecords));
+
+    console.log(`Saved record for form "${formName}":`, data);
+
+    // Go back to main hub
     document.location.href = "main_hub.html";
 }
 
@@ -144,4 +159,73 @@ export function displayFormsPanel(loadedForms) {
     formList[0].focus();
 
     return formList;
+}
+
+export function renderFormUI(formSchema) {
+
+    const title = document.getElementById('formTitle');
+    title.textContent = formSchema.formName;
+
+    const form = document.getElementById('recordForm');
+    form.innerHTML = '';
+
+    // Navigation model
+    const fieldList = [];
+
+    formSchema.fields.forEach(field => {
+
+        // Label
+        const label = document.createElement('label');
+        label.textContent = field.label + ":";
+
+        let input;
+
+        // Select
+        if (field.type === 'select') {
+
+            input = document.createElement('select');
+
+            field.options.forEach(opt => {
+                const option = document.createElement('option');
+
+                option.value = opt;
+                option.textContent = opt;
+
+                input.appendChild(option);
+            });
+
+        } 
+
+        // Regular input
+        else {
+
+            input = document.createElement('input');
+            input.type = field.type;
+        }
+
+        input.id = field.name;
+        input.name = field.name;
+
+        form.appendChild(label);
+        form.appendChild(input);
+        form.appendChild(document.createElement('br'));
+        form.appendChild(document.createElement('br'));
+
+        // Add to navigation array
+        fieldList.push(input);
+    });
+
+    // Focus first field
+    if (fieldList.length > 0) {
+        fieldList[0].focus();
+    }
+
+    return fieldList;
+}
+export function hideFormPanel() {
+    const formPanel = document.getElementById('formPanel');
+
+    if (formPanel) {
+        formPanel.remove();
+    }
 }

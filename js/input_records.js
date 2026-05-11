@@ -34,16 +34,93 @@ window.onload = function(){
         }
 
         function handleWindow(event) {
-            let key = event.key;
+            const key = event.key;
+            event.preventDefault();
+
+            const nodeList = document.querySelectorAll('button'); 
+            const focusableElements = Array.from(nodeList);
+
+            let indexOfFocusedElement = focusableElements.indexOf(document.activeElement);
+
+            if (indexOfFocusedElement === -1 && focusableElements.length > 0) {
+                indexOfFocusedElement = 0;
+                focusableElements[0].focus();
+            }
+
             if (key === 'j') {
-                fnEngine.nextField(key, formList);
+                fnEngine.nextField(indexOfFocusedElement, focusableElements);
+            } else if (key === 'k') {
+                fnEngine.previousField(indexOfFocusedElement, focusableElements);
+            } else if (key === 'Enter') {
+                if (indexOfFocusedElement >= 0 && indexOfFocusedElement < savedForms.length) {
+                    const selectedForm = savedForms[indexOfFocusedElement];
+                    fnEngine.renderFormUI(selectedForm);
+                    fnEngine.hideFormPanel();
+                    mode = 'insert';
+                    fnEngine.setStatusBar(mode);
+                    fnEngine.displayFunctionalities(mode);
+                }
+            } else if (key === 'Escape') {
+                mode = 'normal';
+                fnEngine.setStatusBar(mode);
+                fnEngine.displayFunctionalities(mode);
+                fnEngine.hideFormPanel();
+            }
+        }
+
+        function handleNormal(event) {
+            let key = event.key;
+            event.preventDefault();
+
+            let activeElement = document.activeElement;
+            const nodeList = document.querySelectorAll('input', 'select');
+            const focusableElements = Array.from(nodeList);
+            let indexOfFocusedElement = focusableElements.indexOf(activeElement);
+            
+            if (key === 'j') {
+                fnEngine.nextField(indexOfFocusedElement, focusableElements);
             }
             else if (key === 'k') {
-                fnEngine.previousField(key, formList);
+                fnEngine.previousField(indexOfFocusedElement, focusableElements);
+            }
+            else if (key === 'd') {
+                activeElement.value = "";
+            }
+            else if (key === 'c') {
+                activeElement.value = "";
+                mode = 'insert';
+                fnEngine.setStatusBar(mode);
+                fnEngine.displayFunctionalities(mode);
+            }
+            else if (key === 'i') {
+                mode = 'insert';
+                fnEngine.setStatusBar(mode);
+                fnEngine.displayFunctionalities(mode);
+            }
+            else if (key === 'F10') {
+                mode = 'window';
+                fnEngine.setStatusBar(mode);
+                fnEngine.displayFunctionalities(mode);
+                fnEngine.displayFormsPanel(savedForms);
+            }
+            else if (key === 'F11') {
+                fnEngine.saveAndClose(); 
+            }
+        }
+
+        function handleInsert(event) {
+            const key = event.key;
+            if (key === 'Escape') {
+                mode = 'normal';
+                fnEngine.setStatusBar(mode);
+                fnEngine.displayFunctionalities(mode);
             }
             else if (key === 'Enter') {
-                // let indexOfSelectedForm = formList.indexOf(
-                // console.log(formList);
+                let activeElement = document.activeElement;
+                const nodeList = document.querySelectorAll('input', 'select');
+                const focusableElements = Array.from(nodeList);
+                let indexOfFocusedElement = focusableElements.indexOf(activeElement);
+                fnEngine.nextField(indexOfFocusedElement, focusableElements); 
             }
         }
 

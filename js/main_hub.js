@@ -1,6 +1,6 @@
 window.onload = () => {
 
-    const operatorID = sessionStorage.getItem('operatorID');
+    const operatorID = sessionStorage.getItem('username'); //changed this to username so it doesn't send me back to index //
     if (!operatorID) {
         window.location.href = 'index.html';
     }
@@ -28,7 +28,7 @@ window.onload = () => {
     document.getElementById('verifyRecordsBtn').addEventListener('click', () => {
         window.location.href = 'verify_records.html';
     });
-    
+
     document.getElementById('viewerBtn').addEventListener('click', () => {
         window.location.href = 'viewer.html';
     });

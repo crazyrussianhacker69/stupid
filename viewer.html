@@ -8,8 +8,22 @@
     </head>
 
     <body id="viewerBody">
+        <div id="viewerContainer">
+            <h3>Form Viewer</h3>
 
-        <!-- Scripts -->
+            <div id="dropdownForms">
+                <label for="forms">Choose a form</label>
+
+                <select id="forms" name="forms">
+                    <option value="">-- Select a form --</option>
+                </select>
+            </div>
+
+            <div id="formPreview"></div>
+
+            <button id="returnBtn">Return</button>
+        </div>
+
         <script type="module" src="js/viewer.js"></script>
     </body>
 </html>
